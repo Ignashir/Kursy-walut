@@ -1,0 +1,27 @@
+version: '3.11'
+
+services:
+#  mysql:
+#    image: mysql:latest
+#    volumes:
+#      - mysql:/var/lib/mysql
+#    restart: always
+#    environment:
+#      MYSQL
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: gunicorn --bind 0.0.0.0:8000 --workers 4 'app.main:create_app()' --reload
+    volumes:
+      - ./:/webapp
+    ports:
+      - "8000:8000"
+    networks:
+      nbp-flask-app:
+        aliases:
+          - flask-app
+
+
+networks:
+  nbp-flask-app:
