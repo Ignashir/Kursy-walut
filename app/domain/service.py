@@ -42,10 +42,10 @@ class GoldService(GoldPullUseCase, GetGoldUseCase):
                            req_date: date = None,
                            date_begin: date = None,
                            date_end: date = None,
-                           limit: int = None):
-        event.publish(GoldPulledEvent(date=datetime.today(), date_to_pull=req_date))
-        gold_output_port_puller_adapter.pull_commodity(gold=True, req_date=req_date, date_begin=date_begin, date_end=date_end, limit=limit)
-        gold_output_port_puller_adapter.return_commodity()
+                           limit: int = None) -> Self:
+        event.publish(GoldPulledEvent(date=datetime.today(), date_to_pull=(req_date if req_date else datetime.today())))
+        gold_output_port_puller_adapter.pull_gold(req_date=req_date, date_begin=date_begin, date_end=date_end, limit=limit)
+        return self
 
     def get_gold(self):
-        gold_output_port_puller_adapter.return_commodity()
+        gold_output_port_puller_adapter.get_pulled_gold()

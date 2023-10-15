@@ -7,5 +7,5 @@ class Listener:
             print(f'CURRENCY PULLED {", ".join([currency for currency in commodity_event.code])} '
                   f'AT {commodity_event.date.strftime("%Y-%m-%d %H:%M")}')
         else:
-            print(f'GOLD PULLED FROM {commodity_event.date_to_pull.strftime("%Y-%m-%d %H:%M")} '
+            print(f'GOLD PULLED FROM {commodity_event.date_to_pull.strftime("%Y-%m-%d")} '
                   f'AT {commodity_event.date.strftime("%Y-%m-%d %H:%M")}')

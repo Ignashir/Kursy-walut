@@ -33,6 +33,10 @@ class CurrencyOutputPort(ABC):
     def get_pulled_currency(self):
         pass
 
+    @abstractmethod
+    def make_plot(self, code):
+        pass
+
 
 class GoldOutputPort(ABC):
     @abstractmethod
@@ -45,4 +49,14 @@ class GoldOutputPort(ABC):
 
     @abstractmethod
     def get_pulled_gold(self):
+        pass
+
+
+class PlotterOutputPort(ABC):
+    @abstractmethod
+    def make_plot_for_single_commodity(self):
+        pass
+
+    @abstractmethod
+    def make_plot_for_multiple_currencies(self):
         pass

@@ -10,6 +10,7 @@ gunicorn = "*"
 pytest = "*"
 httpx = "*"
 h2 = "*"
+matplotlib = "*"
 
 [dev-packages]
 

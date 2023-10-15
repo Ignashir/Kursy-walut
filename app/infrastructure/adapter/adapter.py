@@ -30,6 +30,9 @@ class CurrencyOutputPortPullerAdapter(CurrencyOutputPort):
     def get_pulled_currency(self):
         self.puller_repository.return_commodity()
 
+    def make_plot(self, code):
+        pass
+
 
 @dataclass
 class GoldOutputPortPullerAdapter(GoldOutputPort):
