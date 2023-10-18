@@ -2,8 +2,9 @@ from dataclasses import dataclass
 from datetime import date
 
 from app.infrastructure.api_puller.currency_enum import Currency
-from app.application.port.output import CurrencyOutputPort, GoldOutputPort
+from app.application.port.output import CurrencyOutputPort, GoldOutputPort, PlotterOutputPort
 from app.infrastructure.api_puller.repository import CurrencyOperator, GoldOperator
+from app.infrastructure.plotter.plotter import Plotter
 
 
 @dataclass
@@ -47,3 +48,14 @@ class GoldOutputPortPullerAdapter(GoldOutputPort):
 
     def get_pulled_gold(self):
         self.puller_repository.return_commodity()
+
+
+@dataclass
+class PlotterOutputPortPullerAdapter(PlotterOutputPort):
+    plotter: Plotter
+
+    def make_plot_for_single_commodity(self, values: list | dict):
+        self.plotter.make_plot_for_single_commodity(values)
+
+    def make_plot_for_multiple_currencies(self, values: dict):
+        self.plotter.make_plot_for_multiple_currencies(values)

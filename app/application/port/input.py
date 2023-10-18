@@ -45,3 +45,9 @@ class GetGoldUseCase(ABC):
     @abstractmethod
     def get_gold(self):
         pass
+
+
+class DrawAGraphUseCase(ABC):
+    @abstractmethod
+    def draw_graph(self):
+        pass

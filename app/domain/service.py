@@ -6,14 +6,16 @@ from app.application.port.input import (SingleCurrencyPullUseCase,
                                         MultipleCurrencyPullUseCase,
                                         GetCurrencyUseCase,
                                         GoldPullUseCase,
-                                        GetGoldUseCase)
+                                        GetGoldUseCase,
+                                        DrawAGraphUseCase)
 from app.domain.event import GoldPulledEvent, CurrencyPulledEvent
 from app.infrastructure.adapter.configuration import (currency_output_port_puller_adapter,
-                                                      gold_output_port_puller_adapter)
+                                                      gold_output_port_puller_adapter,
+                                                      plotter_output_port_puller_adapter)
 from app.infrastructure.observer.configuration import event
 
 
-class CurrencyService(SingleCurrencyPullUseCase, MultipleCurrencyPullUseCase, GetCurrencyUseCase):
+class CurrencyService(SingleCurrencyPullUseCase, MultipleCurrencyPullUseCase, GetCurrencyUseCase, DrawAGraphUseCase):
     def pull_currency_from_api(self,
                                code: Currency = None,
                                req_date: date = None,
@@ -36,8 +38,16 @@ class CurrencyService(SingleCurrencyPullUseCase, MultipleCurrencyPullUseCase, Ge
     def get_currency(self):
         currency_output_port_puller_adapter.get_pulled_currency()
 
+    def draw_graph(self, many: bool = False):
+        if not many:
+            plotter_output_port_puller_adapter.make_plot_for_single_commodity(
+                currency_output_port_puller_adapter.puller_repository.pulled_value)
+        else:
+            plotter_output_port_puller_adapter.make_plot_for_multiple_currencies(
+                currency_output_port_puller_adapter.puller_repository.pulled_value)
 
-class GoldService(GoldPullUseCase, GetGoldUseCase):
+
+class GoldService(GoldPullUseCase, GetGoldUseCase, DrawAGraphUseCase):
     def pull_gold_from_api(self,
                            req_date: date = None,
                            date_begin: date = None,
@@ -49,3 +59,7 @@ class GoldService(GoldPullUseCase, GetGoldUseCase):
 
     def get_gold(self):
         gold_output_port_puller_adapter.get_pulled_gold()
+
+    def draw_graph(self):
+        plotter_output_port_puller_adapter.make_plot_for_single_commodity(
+            gold_output_port_puller_adapter.puller_repository.pulled_value)
