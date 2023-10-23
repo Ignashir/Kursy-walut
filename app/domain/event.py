@@ -18,3 +18,10 @@ class GoldPulledEvent:
     '''
     date: datetime
     date_to_pull: date
+
+
+@dataclass
+class WebRequestEvent:
+    request: str
+    response_code: int
+    date: datetime

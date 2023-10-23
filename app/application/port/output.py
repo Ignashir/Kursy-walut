@@ -54,9 +54,9 @@ class GoldOutputPort(ABC):
 
 class PlotterOutputPort(ABC):
     @abstractmethod
-    def make_plot_for_single_commodity(self, values: list | dict):
+    def make_plot_for_single_commodity(self, values: list | dict, plot_name: str):
         pass
 
     @abstractmethod
-    def make_plot_for_multiple_currencies(self, values: dict):
+    def make_plot_for_multiple_currencies(self, values: dict, plot_name: str):
         pass

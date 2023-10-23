@@ -54,8 +54,8 @@ class GoldOutputPortPullerAdapter(GoldOutputPort):
 class PlotterOutputPortPullerAdapter(PlotterOutputPort):
     plotter: Plotter
 
-    def make_plot_for_single_commodity(self, values: list | dict):
-        self.plotter.make_plot_for_single_commodity(values)
+    def make_plot_for_single_commodity(self, values: list | dict, plot_name: str = ""):
+        self.plotter.make_plot_for_single_commodity(values, plot_name)
 
-    def make_plot_for_multiple_currencies(self, values: dict):
-        self.plotter.make_plot_for_multiple_currencies(values)
+    def make_plot_for_multiple_currencies(self, values: dict, plot_name: str = ""):
+        self.plotter.make_plot_for_multiple_currencies(values, plot_name)

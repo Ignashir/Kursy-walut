@@ -41,10 +41,10 @@ class CurrencyService(SingleCurrencyPullUseCase, MultipleCurrencyPullUseCase, Ge
     def draw_graph(self, many: bool = False):
         if not many:
             plotter_output_port_puller_adapter.make_plot_for_single_commodity(
-                currency_output_port_puller_adapter.puller_repository.pulled_value)
+                currency_output_port_puller_adapter.puller_repository.pulled_value, plot_name="one-currency")
         else:
             plotter_output_port_puller_adapter.make_plot_for_multiple_currencies(
-                currency_output_port_puller_adapter.puller_repository.pulled_value)
+                currency_output_port_puller_adapter.puller_repository.pulled_value, plot_name="many-currency")
 
 
 class GoldService(GoldPullUseCase, GetGoldUseCase, DrawAGraphUseCase):
@@ -62,4 +62,4 @@ class GoldService(GoldPullUseCase, GetGoldUseCase, DrawAGraphUseCase):
 
     def draw_graph(self):
         plotter_output_port_puller_adapter.make_plot_for_single_commodity(
-            gold_output_port_puller_adapter.puller_repository.pulled_value)
+            gold_output_port_puller_adapter.puller_repository.pulled_value, plot_name="gold-plot")
