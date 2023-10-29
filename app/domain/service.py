@@ -17,11 +17,12 @@ from app.infrastructure.observer.configuration import event
 
 class CurrencyService(SingleCurrencyPullUseCase, MultipleCurrencyPullUseCase, GetCurrencyUseCase, DrawAGraphUseCase):
     def pull_currency_from_api(self,
-                               code: Currency = None,
+                               code: str = None,
                                req_date: date = None,
                                date_begin: date = None,
                                date_end: date = None,
                                limit: int = None) -> Self:
+        code = Currency[code]
         currency_output_port_puller_adapter.pull_single_currency(code, req_date, date_begin, date_end, limit)
         event.publish(CurrencyPulledEvent([code.name], datetime.today()))
         return self
@@ -36,7 +37,7 @@ class CurrencyService(SingleCurrencyPullUseCase, MultipleCurrencyPullUseCase, Ge
         return self
 
     def get_currency(self):
-        currency_output_port_puller_adapter.get_pulled_currency()
+        return currency_output_port_puller_adapter.get_pulled_currency()
 
     def draw_graph(self, many: bool = False):
         if not many:
@@ -58,7 +59,7 @@ class GoldService(GoldPullUseCase, GetGoldUseCase, DrawAGraphUseCase):
         return self
 
     def get_gold(self):
-        gold_output_port_puller_adapter.get_pulled_gold()
+        return gold_output_port_puller_adapter.get_pulled_gold()
 
     def draw_graph(self):
         plotter_output_port_puller_adapter.make_plot_for_single_commodity(

@@ -16,7 +16,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: gunicorn --bind 0.0.0.0:8000 --workers 4 'app.main:create_app()' --reload
+    command: gunicorn --bind 0.0.0.0:8000 --workers 4 'app.domain.web_app:web_app()' --reload
     volumes:
       - ./:/webapp
     ports:

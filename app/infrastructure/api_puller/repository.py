@@ -7,6 +7,9 @@ from app.infrastructure.api_puller.commodity_puller import CommodityPuller
 from app.infrastructure.api_puller.currency_enum import Currency
 
 
+import logging
+logging.basicConfig(level=logging.INFO)
+
 @dataclass
 class PullerOperator(ABC):
     puller = CommodityPuller()
@@ -49,7 +52,7 @@ class CurrencyOperator(PullerOperator):
         return self
 
     def return_commodity(self) -> None:
-        print(self.pulled_value)
+        return self.pulled_value
 
 
 class GoldOperator(PullerOperator):
@@ -65,5 +68,5 @@ class GoldOperator(PullerOperator):
         return self
 
     def return_commodity(self) -> None:
-        print(self.pulled_value)
+        return self.pulled_value
 

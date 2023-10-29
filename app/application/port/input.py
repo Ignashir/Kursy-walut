@@ -7,7 +7,7 @@ from app.infrastructure.api_puller.currency_enum import Currency
 class SingleCurrencyPullUseCase(ABC):
     @abstractmethod
     def pull_currency_from_api(self,
-                               code: Currency = None,
+                               code: str = None,
                                req_date: date = None,
                                date_begin: date = None,
                                date_end: date = None,

@@ -29,10 +29,7 @@ class CurrencyOutputPortPullerAdapter(CurrencyOutputPort):
                                                     limit=limit)
 
     def get_pulled_currency(self):
-        self.puller_repository.return_commodity()
-
-    def make_plot(self, code):
-        pass
+        return self.puller_repository.return_commodity()
 
 
 @dataclass
@@ -47,7 +44,7 @@ class GoldOutputPortPullerAdapter(GoldOutputPort):
         self.puller_repository.pull_commodity(req_date=req_date, date_begin=date_begin, date_end=date_end, limit=limit)
 
     def get_pulled_gold(self):
-        self.puller_repository.return_commodity()
+        return self.puller_repository.return_commodity()
 
 
 @dataclass
