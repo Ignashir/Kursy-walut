@@ -82,23 +82,7 @@ class CommodityPuller:
                             date_end: date = None,
                             limit: int = None
     ) -> {}:
+        if req_date.weekday() >= 5:
+            raise ValueError("DATE MUST BE A WORKING DAY")
         self.create_request(code, gold, req_date, date_begin, date_end, limit)
         return httpx.get(self.request).json()
-
-    @staticmethod
-    def convert_pull_into_readable(json_data: dict | list):
-        '''
-        Converts input into easy to read format
-        :param json_data: dict (one currency) or list (multiple currencies)
-        :return:
-        '''
-        if isinstance(json_data, list):
-            pull_date = json_data[0]['effectiveDate']
-            rates = json_data[0]['rates']
-            return f"DATE: {pull_date}\n" + "\n".join(
-                f"Currency: {new_data['code']} ({Currency[new_data['code']].value}) => {new_data['mid']} PLN"
-                for new_data in rates
-            )
-        rates_data = json_data['rates'][0]
-        return (f"Currency: {json_data['code']} ({Currency[json_data['code']].value}) => "
-                f"{rates_data['mid']} PLN | DATE: {rates_data['effectiveDate']}")
