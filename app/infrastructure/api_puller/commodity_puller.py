@@ -1,10 +1,9 @@
-import requests
 import httpx
 from dataclasses import dataclass
 from datetime import date
 from typing import Self
-import json
-import functools
+# import json
+# import functools
 
 from app.infrastructure.api_puller.currency_enum import Currency
 

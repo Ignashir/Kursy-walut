@@ -14,5 +14,5 @@ class Listener:
             logging.info(f'GOLD PULLED FROM {commodity_event.date_to_pull.strftime("%Y-%m-%d")} '
                          f'AT {commodity_event.date.strftime("%Y-%m-%d %H:%M")}')
         elif isinstance(commodity_event, WebRequestEvent):
-            logging.info(f'METHOD {WebRequestEvent.request} : {WebRequestEvent.response_code}'
-                         f'EXECUTED AT {WebRequestEvent.date}')
+            logging.info(f'METHOD {commodity_event.request} : {commodity_event.response_code} '
+                         f'EXECUTED AT {commodity_event.date.strftime("%Y-%m-%d %H:%M")}')

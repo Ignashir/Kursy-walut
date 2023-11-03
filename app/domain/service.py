@@ -18,9 +18,9 @@ from app.infrastructure.observer.configuration import event
 class CurrencyService(SingleCurrencyPullUseCase, MultipleCurrencyPullUseCase, GetCurrencyUseCase, DrawAGraphUseCase):
     def pull_currency_from_api(self,
                                code: str = None,
-                               req_date: date = None,
-                               date_begin: date = None,
-                               date_end: date = None,
+                               req_date: str = None,
+                               date_begin: str = None,
+                               date_end: str = None,
                                limit: int = None) -> Self:
         code = Currency[code]
         currency_output_port_puller_adapter.pull_single_currency(code, req_date, date_begin, date_end, limit)
@@ -28,9 +28,9 @@ class CurrencyService(SingleCurrencyPullUseCase, MultipleCurrencyPullUseCase, Ge
         return self
 
     def pull_many_currencies_from_api(self,
-                                      req_date: date = None,
-                                      date_begin: date = None,
-                                      date_end: date = None,
+                                      req_date: str = None,
+                                      date_begin: str = None,
+                                      date_end: str = None,
                                       limit: int = None) -> Self:
         currency_output_port_puller_adapter.pull_multiple_currencies(req_date, date_begin, date_end, limit)
         event.publish(CurrencyPulledEvent([code for code in Currency.__dict__["_member_names_"]], datetime.today()))
@@ -50,11 +50,11 @@ class CurrencyService(SingleCurrencyPullUseCase, MultipleCurrencyPullUseCase, Ge
 
 class GoldService(GoldPullUseCase, GetGoldUseCase, DrawAGraphUseCase):
     def pull_gold_from_api(self,
-                           req_date: date = None,
-                           date_begin: date = None,
-                           date_end: date = None,
+                           req_date: str = None,
+                           date_begin: str = None,
+                           date_end: str = None,
                            limit: int = None) -> Self:
-        event.publish(GoldPulledEvent(date=datetime.today(), date_to_pull=(req_date if req_date else datetime.today())))
+        event.publish(GoldPulledEvent(date=datetime.today(), date_to_pull=(datetime.strptime(req_date, "%Y-%m-%d").date() if req_date else datetime.today())))
         gold_output_port_puller_adapter.pull_gold(req_date=req_date, date_begin=date_begin, date_end=date_end, limit=limit)
         return self
 

@@ -11,6 +11,8 @@ httpx = "*"
 matplotlib = "*"
 numpy = "*"
 flask-restful = "*"
+boto3 = "*"
+python-dotenv = "*"
 
 [dev-packages]
 

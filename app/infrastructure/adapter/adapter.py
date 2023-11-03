@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from datetime import date
+from datetime import date, datetime
 
 from app.infrastructure.api_puller.currency_enum import Currency
 from app.application.port.output import CurrencyOutputPort, GoldOutputPort, PlotterOutputPort
@@ -13,18 +13,24 @@ class CurrencyOutputPortPullerAdapter(CurrencyOutputPort):
 
     def pull_single_currency(self,
                              code: Currency = None,
-                             req_date: date = None,
-                             date_begin: date = None,
-                             date_end: date = None,
+                             req_date: str = None,
+                             date_begin: str = None,
+                             date_end: str = None,
                              limit: int = None):
+        req_date = datetime.strptime(req_date, "%Y-%m-%d").date() if req_date else None
+        date_begin = datetime.strptime(date_begin, "%Y-%m-%d").date() if date_begin else None
+        date_end = datetime.strptime(date_end, "%Y-%m-%d").date() if date_end else None
         self.puller_repository.pull_commodity(code=code, req_date=req_date, date_begin=date_begin, date_end=date_end,
                                               limit=limit)
 
     def pull_multiple_currencies(self,
-                                 req_date: date = None,
-                                 date_begin: date = None,
-                                 date_end: date = None,
+                                 req_date: str = None,
+                                 date_begin: str = None,
+                                 date_end: str = None,
                                  limit: int = None):
+        req_date = datetime.strptime(req_date, "%Y-%m-%d").date() if req_date else None
+        date_begin = datetime.strptime(date_begin, "%Y-%m-%d").date() if date_begin else None
+        date_end = datetime.strptime(date_end, "%Y-%m-%d").date() if date_end else None
         self.puller_repository.pull_all_commodities(req_date=req_date, date_begin=date_begin, date_end=date_end,
                                                     limit=limit)
 
@@ -37,10 +43,13 @@ class GoldOutputPortPullerAdapter(GoldOutputPort):
     puller_repository: GoldOperator
 
     def pull_gold(self,
-                  req_date: date = None,
-                  date_begin: date = None,
-                  date_end: date = None,
+                  req_date: str = None,
+                  date_begin: str = None,
+                  date_end: str = None,
                   limit: int = None):
+        req_date = datetime.strptime(req_date, "%Y-%m-%d").date() if req_date else None
+        date_begin = datetime.strptime(date_begin, "%Y-%m-%d").date() if date_begin else None
+        date_end = datetime.strptime(date_end, "%Y-%m-%d").date() if date_end else None
         self.puller_repository.pull_commodity(req_date=req_date, date_begin=date_begin, date_end=date_end, limit=limit)
 
     def get_pulled_gold(self):

@@ -3,6 +3,9 @@ import matplotlib.lines as lines
 from dataclasses import dataclass, field
 from datetime import date
 from pathlib import Path
+import logging
+
+logging.basicConfig(level=logging.INFO)
 
 
 @dataclass
@@ -19,7 +22,13 @@ class Plotter:
         elif isinstance(values, list):
             pl.plot([data["data"] for data in values], [data["cena"] for data in values])
             pl.set_title("Value of Gold")
-        plt.savefig(Path.cwd().as_posix() + f"/infrastructure/web/static_resources/{plot_name}.png", format="png")
+                # logging.info("================================================================================================")
+        # [logging.info(f) for f in Path().iterdir()]
+        # logging.info("================================================================================================")
+        # [logging.info(f) for f in Path().joinpath('app/infrastructure/web/static_resources').iterdir()]
+        # logging.info("================================================================================================")
+        # plt.savefig(f"./webapp/app/infrastructure/web/static_resources/{plot_name}-{date.today()}.png", format="png")
+        plt.savefig(Path().joinpath(f'app/infrastructure/web/static_resources/{plot_name}.png'), format="png")
         plt.show()
 
     @staticmethod
@@ -33,5 +42,5 @@ class Plotter:
         currency_values = [data["mid"] for data in filtered_data]
         currency_names = [data["code"] for data in filtered_data]
         ax.bar(x=currency_names, width=1, height=currency_values, edgecolor="white", linewidth=1)
-        plt.savefig(Path.cwd().as_posix() + f"/infrastructure/web/static_resources/{plot_name}.png", format="png")
+        plt.savefig(Path().joinpath(f'app/infrastructure/web/static_resources/{plot_name}.png'), format="png")
         plt.show()

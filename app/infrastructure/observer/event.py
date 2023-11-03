@@ -1,5 +1,5 @@
 from app.application.port.output import CommodityPullerEventPublisher
-from app.domain.event import CurrencyPulledEvent, GoldPulledEvent
+from app.domain.event import CurrencyPulledEvent, GoldPulledEvent, WebRequestEvent
 from app.infrastructure.observer.listener import Listener
 
 
@@ -14,5 +14,5 @@ class Event(CommodityPullerEventPublisher):
     def unsubscribe(self, observer: Listener) -> None:
         self.observers.remove(observer)
 
-    def publish(self, commodity_pull_event: CurrencyPulledEvent | GoldPulledEvent):
+    def publish(self, commodity_pull_event: CurrencyPulledEvent | GoldPulledEvent | WebRequestEvent):
         [observer(commodity_pull_event) for observer in self.observers]
