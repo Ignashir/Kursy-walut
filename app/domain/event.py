@@ -25,3 +25,8 @@ class WebRequestEvent:
     request: str
     response_code: int
     date: datetime
+
+
+@dataclass
+class PDFCreateEvent:
+    date: datetime

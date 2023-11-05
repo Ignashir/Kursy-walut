@@ -56,3 +56,13 @@ class PlotterOutputPort(ABC):
     @abstractmethod
     def make_plot_for_multiple_currencies(self, values: dict, plot_name: str):
         pass
+
+
+class FileReporterPortAdapter(ABC):
+    @abstractmethod
+    def create_report(self, data: dict, many: bool = False, gold: bool = False):
+        pass
+
+    @abstractmethod
+    def generate_report(self):
+        pass

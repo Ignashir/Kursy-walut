@@ -13,6 +13,9 @@ numpy = "*"
 flask-restful = "*"
 boto3 = "*"
 python-dotenv = "*"
+pdfkit = "*"
+wkhtmltopdf = "*"
+fpdf2 = "*"
 
 [dev-packages]
 

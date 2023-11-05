@@ -51,3 +51,9 @@ class DrawAGraphUseCase(ABC):
     @abstractmethod
     def draw_graph(self):
         pass
+
+
+class GetReport(ABC):
+    @abstractmethod
+    def get_report(self):
+        pass

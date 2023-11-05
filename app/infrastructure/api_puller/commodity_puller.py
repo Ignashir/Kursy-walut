@@ -82,7 +82,10 @@ class CommodityPuller:
                             date_end: date = None,
                             limit: int = None
     ) -> {}:
-        if req_date.weekday() >= 5:
-            raise ValueError("DATE MUST BE A WORKING DAY")
+        try:
+            if req_date.weekday() >= 5:
+                raise ValueError("DATE MUST BE A WORKING DAY")
+        except AttributeError:
+            pass
         self.create_request(code, gold, req_date, date_begin, date_end, limit)
         return httpx.get(self.request).json()

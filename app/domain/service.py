@@ -7,15 +7,17 @@ from app.application.port.input import (SingleCurrencyPullUseCase,
                                         GetCurrencyUseCase,
                                         GoldPullUseCase,
                                         GetGoldUseCase,
-                                        DrawAGraphUseCase)
+                                        DrawAGraphUseCase,
+                                        GetReport)
 from app.domain.event import GoldPulledEvent, CurrencyPulledEvent
 from app.infrastructure.adapter.configuration import (currency_output_port_puller_adapter,
                                                       gold_output_port_puller_adapter,
-                                                      plotter_output_port_puller_adapter)
+                                                      plotter_output_port_puller_adapter,
+                                                      pdf_file_reporter_port_adapter)
 from app.infrastructure.observer.configuration import event
 
 
-class CurrencyService(SingleCurrencyPullUseCase, MultipleCurrencyPullUseCase, GetCurrencyUseCase, DrawAGraphUseCase):
+class CurrencyService(SingleCurrencyPullUseCase, MultipleCurrencyPullUseCase, GetCurrencyUseCase, DrawAGraphUseCase, GetReport):
     def pull_currency_from_api(self,
                                code: str = None,
                                req_date: str = None,
@@ -39,16 +41,22 @@ class CurrencyService(SingleCurrencyPullUseCase, MultipleCurrencyPullUseCase, Ge
     def get_currency(self):
         return currency_output_port_puller_adapter.get_pulled_currency()
 
-    def draw_graph(self, many: bool = False):
+    def draw_graph(self, many: bool = False) -> Self:
         if not many:
             plotter_output_port_puller_adapter.make_plot_for_single_commodity(
                 currency_output_port_puller_adapter.puller_repository.pulled_value, plot_name="one-currency")
         else:
             plotter_output_port_puller_adapter.make_plot_for_multiple_currencies(
                 currency_output_port_puller_adapter.puller_repository.pulled_value, plot_name="many-currency")
+        return self
+
+    def get_report(self, many: bool = False) -> Self:
+        pdf_file_reporter_port_adapter.create_report(
+            currency_output_port_puller_adapter.puller_repository.pulled_value, many=many).generate_report()
+        return self
 
 
-class GoldService(GoldPullUseCase, GetGoldUseCase, DrawAGraphUseCase):
+class GoldService(GoldPullUseCase, GetGoldUseCase, DrawAGraphUseCase, GetReport):
     def pull_gold_from_api(self,
                            req_date: str = None,
                            date_begin: str = None,
@@ -61,6 +69,12 @@ class GoldService(GoldPullUseCase, GetGoldUseCase, DrawAGraphUseCase):
     def get_gold(self):
         return gold_output_port_puller_adapter.get_pulled_gold()
 
-    def draw_graph(self):
+    def draw_graph(self) -> Self:
         plotter_output_port_puller_adapter.make_plot_for_single_commodity(
             gold_output_port_puller_adapter.puller_repository.pulled_value, plot_name="gold-plot")
+        return self
+
+    def get_report(self) -> Self:
+        pdf_file_reporter_port_adapter.create_report(
+            gold_output_port_puller_adapter.puller_repository.pulled_value, gold=True).generate_report()
+        return self

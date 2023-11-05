@@ -1,10 +1,12 @@
 from dataclasses import dataclass
-from datetime import date, datetime
+from datetime import datetime
+from typing import Self
 
 from app.infrastructure.api_puller.currency_enum import Currency
-from app.application.port.output import CurrencyOutputPort, GoldOutputPort, PlotterOutputPort
+from app.application.port.output import CurrencyOutputPort, GoldOutputPort, PlotterOutputPort, FileReporterPortAdapter
 from app.infrastructure.api_puller.repository import CurrencyOperator, GoldOperator
 from app.infrastructure.plotter.plotter import Plotter
+from app.infrastructure.file_reporter.reporter_builder import FileReporter
 
 
 @dataclass
@@ -65,3 +67,18 @@ class PlotterOutputPortPullerAdapter(PlotterOutputPort):
 
     def make_plot_for_multiple_currencies(self, values: dict, plot_name: str = ""):
         self.plotter.make_plot_for_multiple_currencies(values, plot_name)
+
+
+@dataclass
+class FileReporterPortAdapter(FileReporterPortAdapter):
+    file_reporter: FileReporter
+
+    def create_report(self, data: dict, many: bool = False, gold: bool = False) -> Self:
+        if many:
+            self.file_reporter.multiple_currency_render(data)
+        else:
+            self.file_reporter.single_commodity_render(data, gold)
+        return self
+
+    def generate_report(self):
+        self.file_reporter.create_report()
