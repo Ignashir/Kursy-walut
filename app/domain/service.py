@@ -8,12 +8,14 @@ from app.application.port.input import (SingleCurrencyPullUseCase,
                                         GoldPullUseCase,
                                         GetGoldUseCase,
                                         DrawAGraphUseCase,
-                                        GetReport)
+                                        GetReport,
+                                        PredictValue)
 from app.domain.event import GoldPulledEvent, CurrencyPulledEvent
 from app.infrastructure.adapter.configuration import (currency_output_port_puller_adapter,
                                                       gold_output_port_puller_adapter,
                                                       plotter_output_port_puller_adapter,
-                                                      pdf_file_reporter_port_adapter)
+                                                      pdf_file_reporter_port_adapter,
+                                                      gold_predictor_port_adapter)
 from app.infrastructure.observer.configuration import event
 
 
@@ -62,7 +64,11 @@ class GoldService(GoldPullUseCase, GetGoldUseCase, DrawAGraphUseCase, GetReport)
                            date_begin: str = None,
                            date_end: str = None,
                            limit: int = None) -> Self:
-        event.publish(GoldPulledEvent(date=datetime.today(), date_to_pull=(datetime.strptime(req_date, "%Y-%m-%d").date() if req_date else datetime.today())))
+        date_to_pull = req_date if req_date else date_begin
+        event.publish(GoldPulledEvent(
+            date=datetime.today(),
+            date_to_pull=(datetime.strptime(date_to_pull, "%Y-%m-%d").date()
+                          if date_to_pull else datetime.today())))
         gold_output_port_puller_adapter.pull_gold(req_date=req_date, date_begin=date_begin, date_end=date_end, limit=limit)
         return self
 
@@ -78,3 +84,11 @@ class GoldService(GoldPullUseCase, GetGoldUseCase, DrawAGraphUseCase, GetReport)
         pdf_file_reporter_port_adapter.create_report(
             gold_output_port_puller_adapter.puller_repository.pulled_value, gold=True).generate_report()
         return self
+
+
+# TODO for now it is gold exclusive maybe add usd in future
+class PredictorService(PredictValue):
+    def predict_value(self, date_to_predict: str):
+        if datetime.strptime(date_to_predict, '%Y-%m-%d').date() <= date.today():
+            return GoldService().pull_gold_from_api(req_date=date_to_predict).get_gold()
+        return gold_predictor_port_adapter.predict_value(date_to_predict)[0]

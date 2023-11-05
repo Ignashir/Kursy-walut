@@ -11,11 +11,10 @@ httpx = "*"
 matplotlib = "*"
 numpy = "*"
 flask-restful = "*"
-boto3 = "*"
 python-dotenv = "*"
-pdfkit = "*"
-wkhtmltopdf = "*"
 fpdf2 = "*"
+pandas = "*"
+scikit-learn = "*"
 
 [dev-packages]
 

@@ -57,3 +57,9 @@ class GetReport(ABC):
     @abstractmethod
     def get_report(self):
         pass
+
+
+class PredictValue(ABC):
+    @abstractmethod
+    def predict_value(self, date_to_predict: str):
+        pass

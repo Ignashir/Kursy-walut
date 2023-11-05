@@ -3,10 +3,12 @@ from datetime import datetime
 from typing import Self
 
 from app.infrastructure.api_puller.currency_enum import Currency
-from app.application.port.output import CurrencyOutputPort, GoldOutputPort, PlotterOutputPort, FileReporterPortAdapter
+from app.application.port.output import (CurrencyOutputPort, GoldOutputPort, PlotterOutputPort, FileReporterOutputPort,
+                                         PredictorOutputPort)
 from app.infrastructure.api_puller.repository import CurrencyOperator, GoldOperator
 from app.infrastructure.plotter.plotter import Plotter
 from app.infrastructure.file_reporter.reporter_builder import FileReporter
+from app.infrastructure.ml.model.model import CommodityPredictor
 
 
 @dataclass
@@ -70,7 +72,7 @@ class PlotterOutputPortPullerAdapter(PlotterOutputPort):
 
 
 @dataclass
-class FileReporterPortAdapter(FileReporterPortAdapter):
+class FileReporterPortAdapter(FileReporterOutputPort):
     file_reporter: FileReporter
 
     def create_report(self, data: dict, many: bool = False, gold: bool = False) -> Self:
@@ -82,3 +84,11 @@ class FileReporterPortAdapter(FileReporterPortAdapter):
 
     def generate_report(self):
         self.file_reporter.create_report()
+
+
+@dataclass
+class PredictorPortAdapter(PredictorOutputPort):
+    model: CommodityPredictor
+
+    def predict_value(self, date: str):
+        return self.model.predict(date)

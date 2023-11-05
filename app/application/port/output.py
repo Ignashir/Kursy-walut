@@ -58,11 +58,17 @@ class PlotterOutputPort(ABC):
         pass
 
 
-class FileReporterPortAdapter(ABC):
+class FileReporterOutputPort(ABC):
     @abstractmethod
     def create_report(self, data: dict, many: bool = False, gold: bool = False):
         pass
 
     @abstractmethod
     def generate_report(self):
+        pass
+
+
+class PredictorOutputPort(ABC):
+    @abstractmethod
+    def predict_value(self, date_to_predict: str):
         pass
