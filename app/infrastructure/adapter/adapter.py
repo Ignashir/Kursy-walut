@@ -7,7 +7,7 @@ from app.application.port.output import (CurrencyOutputPort, GoldOutputPort, Plo
                                          PredictorOutputPort)
 from app.infrastructure.api_puller.repository import CurrencyOperator, GoldOperator
 from app.infrastructure.plotter.plotter import Plotter
-from app.infrastructure.file_reporter.reporter_builder import FileReporter
+from app.infrastructure.file_reporter.reporter_pattern import FileReporter
 from app.infrastructure.ml.model.model import CommodityPredictor
 
 

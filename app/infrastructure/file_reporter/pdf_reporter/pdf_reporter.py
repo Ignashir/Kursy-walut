@@ -4,7 +4,7 @@ from datetime import date
 from pathlib import Path
 import logging
 
-from app.infrastructure.file_reporter.reporter_builder import FileReporter
+from app.infrastructure.file_reporter.reporter_pattern import FileReporter
 
 
 logging.basicConfig(level=logging.INFO)

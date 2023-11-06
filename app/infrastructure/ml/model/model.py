@@ -9,8 +9,6 @@ from typing import Self
 import pickle
 import csv
 
-# from app.domain.service import CurrencyService, GoldService
-
 
 class CommodityPredictor:
     data_file = 'pull.csv'
@@ -65,17 +63,21 @@ class GoldPredictor(CommodityPredictor):
         super().load_from_file(Path().cwd().joinpath('app/infrastructure/ml/model/gold_model.pkl'))
 
     # TODO this leads to a circular import error so I have to figure out another way
-    # def gather_data(self) -> Self:
-    #     step = int(timedelta(days=80).total_seconds())
-    #     with open(self.data_file, mode='w') as file:
-    #         writer = csv.DictWriter(file, fieldnames=["value", "date"])
-    #         writer.writeheader()
-    #         for stamp in range(int(datetime(year=2020, month=1, day=1).timestamp()),
-    #                            int((datetime.today() - timedelta(days=80)).timestamp()),
-    #                            step):
-    #             for pull in GoldService().pull_gold_from_api(
-    #                     date_begin=date.fromtimestamp(stamp).strftime("%Y-%m-%d"),
-    #                     date_end=date.fromtimestamp(stamp + step).strftime("%Y-%m-%d")
-    #             ).get_gold():
-    #                 writer.writerow({'value': pull['cena'], 'date': int(pull['data'].replace('-', ''))})
-    #     return self
+    def gather_data(self, pull_obj) -> Self:
+        '''
+        :param pull_obj: GoldService or CurrencyService used to avoid circural import error
+        :return:
+        '''
+        step = int(timedelta(days=80).total_seconds())
+        with open(self.data_file, mode='w') as file:
+            writer = csv.DictWriter(file, fieldnames=["value", "date"])
+            writer.writeheader()
+            for stamp in range(int(datetime(year=2020, month=1, day=1).timestamp()),
+                               int((datetime.today() - timedelta(days=80)).timestamp()),
+                               step):
+                for pull in pull_obj().pull_gold_from_api(
+                        date_begin=date.fromtimestamp(stamp).strftime("%Y-%m-%d"),
+                        date_end=date.fromtimestamp(stamp + step).strftime("%Y-%m-%d")
+                ).get_gold():
+                    writer.writerow({'value': pull['cena'], 'date': int(pull['data'].replace('-', ''))})
+        return self
