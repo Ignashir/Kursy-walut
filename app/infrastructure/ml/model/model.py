@@ -62,7 +62,6 @@ class GoldPredictor(CommodityPredictor):
     def __init__(self):
         super().load_from_file(Path().cwd().joinpath('app/infrastructure/ml/model/gold_model.pkl'))
 
-    # TODO this leads to a circular import error so I have to figure out another way
     def gather_data(self, pull_obj) -> Self:
         '''
         :param pull_obj: GoldService or CurrencyService used to avoid circural import error
