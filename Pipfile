@@ -15,6 +15,7 @@ python-dotenv = "*"
 fpdf2 = "*"
 pandas = "*"
 scikit-learn = "*"
+flask-cors = "*"
 
 [dev-packages]
 

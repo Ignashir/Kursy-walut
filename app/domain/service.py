@@ -85,7 +85,6 @@ class GoldService(GoldPullUseCase, GetGoldUseCase, DrawAGraphUseCase, GetReport)
             gold_output_port_puller_adapter.puller_repository.pulled_value, gold=True).generate_report()
         return self
 
-# TODO[IGNACY] for now it is gold exclusive maybe add usd in future
 class PredictorService(PredictValue):
     def predict_value(self, date_to_predict: str):
         if datetime.strptime(date_to_predict, '%Y-%m-%d').date() <= date.today():

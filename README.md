@@ -1,4 +1,5 @@
 This app provides functionalities to pull data from [nbp.api](https://nbp.pl/statystyka-i-sprawozdawczosc/kursy/)
+Project written using hexagonal architecture
 
 ## Installation
 

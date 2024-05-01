@@ -48,8 +48,6 @@ U
 ,app/infrastructure/file_reporter/__init__.py,a/e/aee691f388417c7ff53fcdcaba1aa70ff1149f77
 a
 1app/infrastructure/file_reporter/configuration.py,b/e/be799e0213f4f6527593c5050357ba1848e4be07
-d
-4app/infrastructure/file_reporter/reporter_builder.py,1/0/10f76db8561fd65eef60fe04f5fc149a3281c6ce
 V
 &app/infrastructure/web/routes/route.py,8/8/883dce27c919fe4c5642b2f209a2f07494af6a62
 h
@@ -58,11 +56,17 @@ E
 app/domain/web_app.py,9/9/99b7310b1f73217ead7137a1a2d7d0873832498c
 m
 =app/infrastructure/file_reporter/pdf_reporter/pdf_reporter.py,f/0/f025427ab40303cf751ffd267edd0523bec6eda5
-Q
-!app/infrastructure/ml/model.ipynb,9/9/9982458dae1d51391abab3843432e0f31e4e7947
 V
 &app/infrastructure/ml/configuration.py,1/b/1b4a54156842c27397f99149bd3a41179e4a4e4a
-N
-app/infrastructure/ml/pull.csv,0/c/0c2e920200ffd667101c5e1fc63258d2a59be96f
-N
-app/infrastructure/ml/model.py,a/1/a1dddcb226da02ccaf83c196c70eedc037561241
+T
+$app/infrastructure/ml/model/pull.csv,0/f/0f2bdaca8997da9d01037b80064e886b2e8dd301
+d
+4app/infrastructure/file_reporter/reporter_pattern.py,5/9/59003793c15ca9779b4271a5233f9609cf88385a
+9
+	README.md,8/e/8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
+T
+$app/infrastructure/ml/model/model.py,8/b/8b54cd50596a14a3071795d961693e359b7c9ab4
+W
+'app/infrastructure/web/configuration.py,b/7/b7ee648b8230bcf2e429b8020e06605848776c30
+<
+Pipfile.lock,e/5/e563262209b7c2e62d1869582c8134583baa2204
